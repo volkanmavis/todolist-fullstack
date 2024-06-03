@@ -13,7 +13,7 @@ function App() {
 
   async function fetchTodos() {
     try {
-      const response = await axios.get('http://localhost:8080/');
+      const response = await axios.get('https://todolist-fullstack-m8vr.onrender.com');
       setAllTasks(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -22,7 +22,7 @@ function App() {
 
   async function addTask(task) {
     try {
-      await axios.post("http://localhost:8080/add", { task });
+      await axios.post("https://todolist-fullstack-m8vr.onrender.com/add", { task });
       fetchTodos();
     } catch (error) {
       console.error("Error adding task:", error);
@@ -31,7 +31,7 @@ function App() {
 
   async function deleteTask(id) {
     try {
-      await axios.delete(`http://localhost:8080/tasks/${id}`);
+      await axios.delete(`https://todolist-fullstack-m8vr.onrender.com/tasks/${id}`);
       fetchTodos();
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -40,7 +40,7 @@ function App() {
 
   async function editTask(id, updatedTask) {
     try {
-      await axios.put(`http://localhost:8080/tasks/${id}`, { task: updatedTask });
+      await axios.put(`https://todolist-fullstack-m8vr.onrender.com/tasks/${id}`, { task: updatedTask });
       fetchTodos();
     } catch (error) {
       console.error('Error editing task:', error);
