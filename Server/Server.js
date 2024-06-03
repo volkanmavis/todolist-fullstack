@@ -1,22 +1,15 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const TodoModel = require('./Models/TodoModel');
+const connectDB = require('./Connection');
 const port = 8080;
 const app = express();
-const URI =
-  'mongodb+srv://volkanmav:Jumpda1881.@todo-list.o5tsho8.mongodb.net/?retryWrites=true&w=majority&appName=Todo-list';
 
 app.use(cors());
 app.use(express.json());
 
-main()
-  .then(() => console.log('DB connected successfully'))
-  .catch((err) => console.log(err));
-
-async function main() {
-  await mongoose.connect(URI);
-}
+connectDB();
 
 app.get('/', async (req, res) => {
   try {
@@ -29,15 +22,14 @@ app.get('/', async (req, res) => {
   }
 });
 
-
 app.post('/add', async (req, res) => {
   try {
     const { task } = req.body;
     if (!task) {
       throw new Error('Missing task property in request body');
     }
-    const newTask = await TodoModel.create({ task });
-    res.status(200).send({ msg: 'Task added successfully'});
+    await TodoModel.create({ task });
+    res.status(200).send({ msg: 'Task added successfully' });
   } catch (err) {
     console.error('Error adding task:', err);
     res.status(400).send({ error: err.message || 'Failed to add task' });
